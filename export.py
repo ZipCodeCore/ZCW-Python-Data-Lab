@@ -2,6 +2,7 @@
 import MySQLdb as mariadb
 import psycopg2 as pgsql
 import yaml
+import csv
 
 with open("config.yaml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
@@ -55,5 +56,8 @@ with conn_pg.cursor() as cursor_pg:
             'employer': r[5]
         })
 
-for lead in leads:
-    print(lead['email'])
+keys = leads[0].keys()
+with open('leads.csv', 'w') as outfile:
+    dict_writer = csv.DictWriter(outfile, keys)
+    dict_writer.writeheader()
+    dict_writer.writerows(leads)
