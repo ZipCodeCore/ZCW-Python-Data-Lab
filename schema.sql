@@ -9,3 +9,4 @@ CREATE TABLE promarkone.leads
     phone VARCHAR(15),
     tags TEXT
 );
+SELECT * FROM promarkone.leads;

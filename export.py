@@ -4,7 +4,7 @@ import psycopg2 as pgsql
 import yaml
 import csv
 
-with open("config.yaml", 'r') as ymlfile:
+with open("config.yml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
 
 conn = mariadb.connect(host=cfg['mysql']['host'],
