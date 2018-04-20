@@ -12,13 +12,25 @@ conn = mariadb.connect(host=cfg['mysql']['host'],
         db=cfg['mysql']['db'],
         port=cfg['mysql']['port'])
 
+leads = []
+
 with conn.cursor() as cursor:
     sql = """
         SELECT * FROM proleads;
     """
     cursor.execute(sql)
-    result = cursor.fetchone()
-    print(result)
+    result = cursor.fetchall()
+    for r in result:
+        leads.append({
+            'first_name': r[1],
+            'last_name': r[2],
+            'email': r[3],
+            'gender': r[4],
+            'tags': r[5],
+            'phone': None,
+            'employer': None
+        })
+
 
 conn_pg = pgsql.connect(host=cfg['pgres']['host'],
         user=cfg['pgres']['user'],
@@ -31,6 +43,17 @@ with conn_pg.cursor() as cursor_pg:
         SELECT * FROM leads;
     """
     cursor_pg.execute(sql)
-    result = cursor_pg.fetchone()
-    print(result)
+    result = cursor_pg.fetchall()
+    for r in result:
+        leads.append({
+            'first_name': r[1],
+            'last_name': r[2],
+            'email': r[3],
+            'gender': None,
+            'tags': r[6],
+            'phone': r[4],
+            'employer': r[5]
+        })
 
+for lead in leads:
+    print(lead['email'])
