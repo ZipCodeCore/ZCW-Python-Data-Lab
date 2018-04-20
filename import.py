@@ -18,3 +18,14 @@ conn = mariadb.connect(host=cfg['mysql']['host'],
         passwd=cfg['mysql']['password'],
         db=cfg['mysql']['db'],
         port=cfg['mysql']['port'])
+
+conn.cursor().executeMany("""
+    INSERT INTO leads (first_name, last_name, email, gender, employer, phone, tags)
+    VALUES (%(first_name)s,
+            %(last_name)s,
+            %(email)s,
+            %(gender)s,
+            %(employer)s,
+            %(phone)s,
+            %(tags)s)""", leads)
+conn.commit()
