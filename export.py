@@ -14,10 +14,11 @@ conn = mariadb.connect(host=cfg['mysql']['host'],
 
 with conn.cursor() as cursor:
     sql = """
-        SELECT table_name FROM information_schema.tables;
+        SELECT * FROM proleads;
     """
     cursor.execute(sql)
-    result = cursor.fetchall()
+    result = cursor.fetchone()
+    print(result)
 
 conn_pg = pgsql.connect(host=cfg['pgres']['host'],
         user=cfg['pgres']['user'],
@@ -27,8 +28,9 @@ conn_pg = pgsql.connect(host=cfg['pgres']['host'],
 
 with conn_pg.cursor() as cursor_pg:
     sql = """
-        SELECT table_name FROM information_schema.tables;
+        SELECT * FROM leads;
     """
     cursor_pg.execute(sql)
-    result = cursor_pg.fetchall()
+    result = cursor_pg.fetchone()
     print(result)
+
